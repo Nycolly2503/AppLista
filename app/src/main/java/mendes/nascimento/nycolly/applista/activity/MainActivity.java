@@ -53,30 +53,26 @@ public class MainActivity extends AppCompatActivity {
         rvItens.addItemDecoration(dividerItemDecoration);
 
 
-        }
-        @Override
-        protected void onActivityResult(int requestCode,int resultCode, Intent data){
-            super.onActivityResult(requestCode,resultCode,data);
-            if (requestCode==New_Item_Request){
-                if (resultCode== Activity.RESULT_OK){
-                    MyItem myItem=new MyItem();
-                    myItem.title=data.getStringExtra("title");
-                    myItem.description=data.getStringExtra("description");
-                    myItem.photo=data.getData();
-                    itens.add(myItem);
-                    myAdapter.notifyItemInserted(itens.size()-1);
+    }
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if (requestCode==New_Item_Request){
+            if (resultCode== Activity.RESULT_OK){
+                MyItem myItem=new MyItem();
+                myItem.title=data.getStringExtra("title");
+                myItem.description=data.getStringExtra("description");
+                myItem.photo=data.getData();
+                itens.add(myItem);
+                myAdapter.notifyItemInserted(itens.size()-1);
 
-                }
             }
-
         }
-
-
-
-
 
     }
 
 
 
 
+
+}

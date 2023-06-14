@@ -1,3 +1,5 @@
+
+
 package mendes.nascimento.nycolly.applista.activity;
 
 import android.net.Uri;
@@ -12,6 +14,5 @@ public class MyItem {
     public String title;
     public String description;
 }
-
 
 
