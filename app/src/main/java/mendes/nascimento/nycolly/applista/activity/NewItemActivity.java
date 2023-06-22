@@ -2,6 +2,7 @@ package mendes.nascimento.nycolly.applista.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import mendes.nascimento.nycolly.applista.R;
+import mendes.nascimento.nycolly.applista.activity.Model.NewItemActivityViewModel;
 
 public class NewItemActivity extends AppCompatActivity {
 
@@ -25,6 +27,15 @@ public class NewItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
+        //mantendo a imagem na rotação de tela
+        NewItemActivityViewModel vm =new ViewModelProvider(this).get(NewItemActivityViewModel.class );
+        Uri selectPhotoLocaition=vm.getSelectPhotoLocation();
+        if(selectPhotoLocaition!=null){
+            ImageView imvPhotoPrevew =findViewById(R.id.imvPhotoPrevew);
+            imvPhotoPrevew.setImageURI(selectPhotoLocaition);
+        }
+
+
         // definição do click para abertura da galeria
         ImageButton imgCI = findViewById(R.id.imbCI);
         imgCI.setOnClickListener(new View.OnClickListener() {
@@ -75,9 +86,14 @@ public class NewItemActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PHOTO_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                photoSelected = data.getData();
+               Uri photoSelected = data.getData();
                 ImageView imvfotoPreview = findViewById(R.id.imvPhotoPrevew);
                 imvfotoPreview.setImageURI(photoSelected);
+                imvfotoPreview.setImageURI(photoSelected);
+                NewItemActivityViewModel vm = new ViewModelProvider(this).get(NewItemActivityViewModel.class );
+                vm.setSelectPhotoLocation(photoSelected);
+
+
             }
         }
     }

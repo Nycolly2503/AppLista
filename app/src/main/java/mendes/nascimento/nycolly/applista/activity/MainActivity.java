@@ -1,6 +1,8 @@
 package mendes.nascimento.nycolly.applista.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mendes.nascimento.nycolly.applista.R;
+import mendes.nascimento.nycolly.applista.activity.Model.MainActivityViewModel;
 
 public class MainActivity extends AppCompatActivity {
     static int New_Item_Request=1;
@@ -44,8 +47,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RecyclerView rvItens=findViewById(R.id.rvItens);
+        MainActivityViewModel vm=new ViewModelProvider(  this ).get(MainActivityViewModel.class);
+        List<MyItem> itens=vm.getItens();
+
         myAdapter=new MyAdapter(this,itens);
         rvItens.setAdapter(myAdapter);
+
         rvItens.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this);
         rvItens.setLayoutManager(layoutManager);
@@ -63,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
                 myItem.title=data.getStringExtra("title");
                 myItem.description=data.getStringExtra("description");
                 myItem.photo=data.getData();
+                itens.add(myItem);
+                myAdapter.notifyItemInserted(itens.size()-1);
+                MainActivityViewModel vm=new ViewModelProvider(this).get(MainActivityViewModel.class);
+                List<MyItem>itens =vm.getItens();
                 itens.add(myItem);
                 myAdapter.notifyItemInserted(itens.size()-1);
 
