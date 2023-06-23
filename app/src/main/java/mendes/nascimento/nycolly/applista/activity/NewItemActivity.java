@@ -21,7 +21,7 @@ import mendes.nascimento.nycolly.applista.activity.Model.NewItemActivityViewMode
 public class NewItemActivity extends AppCompatActivity {
 
     static int PHOTO_PICKER_REQUEST = 1;
-    Uri photoSelected = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class NewItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_item);
         //mantendo a imagem na rotação de tela
         NewItemActivityViewModel vm =new ViewModelProvider(this).get(NewItemActivityViewModel.class );
-        Uri selectPhotoLocaition=vm.getSelectPhotoLocation();
+        Uri selectPhotoLocaition = vm.getSelectPhotoLocation();
         if(selectPhotoLocaition!=null){
             ImageView imvPhotoPrevew =findViewById(R.id.imvPhotoPrevew);
             imvPhotoPrevew.setImageURI(selectPhotoLocaition);
@@ -52,7 +52,8 @@ public class NewItemActivity extends AppCompatActivity {
         btnAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (photoSelected == null) {
+                Uri selectPhotoLocaition = vm.getSelectPhotoLocation();
+                if (selectPhotoLocaition == null) {
                     Toast.makeText(NewItemActivity.this, "É necessário selecionar uma imagem!", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -69,7 +70,7 @@ public class NewItemActivity extends AppCompatActivity {
                     return;
                 }
                 Intent i = new Intent();
-                i.setData(photoSelected);
+                i.setData(selectPhotoLocaition);
                 i.putExtra("title", title);
                 i.putExtra("description", description);
                 setResult(Activity.RESULT_OK, i);
@@ -88,7 +89,6 @@ public class NewItemActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                Uri photoSelected = data.getData();
                 ImageView imvfotoPreview = findViewById(R.id.imvPhotoPrevew);
-                imvfotoPreview.setImageURI(photoSelected);
                 imvfotoPreview.setImageURI(photoSelected);
                 NewItemActivityViewModel vm = new ViewModelProvider(this).get(NewItemActivityViewModel.class );
                 vm.setSelectPhotoLocation(photoSelected);

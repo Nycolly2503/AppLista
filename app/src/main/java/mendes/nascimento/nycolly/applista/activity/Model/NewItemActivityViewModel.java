@@ -2,7 +2,9 @@ package mendes.nascimento.nycolly.applista.activity.Model;
 
 import android.net.Uri;
 
-public class NewItemActivityViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class NewItemActivityViewModel extends ViewModel {
     Uri selectPhotoLocation = null;
 
     public Uri getSelectPhotoLocation(){
